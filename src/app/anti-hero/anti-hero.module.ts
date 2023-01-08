@@ -6,13 +6,13 @@ import { AntiHeroFormComponent } from './components/anti-hero-form/anti-hero-for
 import { AntiHeroListComponent } from './components/anti-hero-list/anti-hero-list.component';
 import {AntiHeroRoutingModule} from "./anti-hero-routing.module";
 import {AntiHeroCommandBarComponent} from "./components/anti-hero-command-bar/anti-hero-command-bar.component";
-import {MatIconModule} from "@angular/material/icon";
-import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatTableModule} from "@angular/material/table";
 import {ReactiveFormsModule} from "@angular/forms";
-import {MatInputModule} from "@angular/material/input";
-import {MatCardModule} from "@angular/material/card";
 import {MaterialModule} from "../material/material.module";
+import {AntiHeroEffects} from "./state/anti-hero.effects";
+import {EffectsModule} from "@ngrx/effects";
+import {StoreModule} from "@ngrx/store";
+import {HttpClientModule} from "@angular/common/http";
+import {antiHeroReducer} from "./state/anti-hero.reducers";
 
 
 
@@ -27,13 +27,11 @@ import {MaterialModule} from "../material/material.module";
   imports: [
     CommonModule,
     AntiHeroRoutingModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatTableModule,
     ReactiveFormsModule,
-    MatInputModule,
-    MatCardModule,
-    MaterialModule
+    MaterialModule,
+    HttpClientModule,
+    StoreModule.forFeature('antiHeroState', antiHeroReducer),
+    EffectsModule.forFeature([AntiHeroEffects])
   ]
 })
 export class AntiHeroModule { }

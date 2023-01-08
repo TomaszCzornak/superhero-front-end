@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/state/app.state';
 import { CommandBarActions } from '../../enums/command-bar-actions.enum';
 import { TableActions } from '../../enums/table-actions.enum';
 import { AntiHero } from '../../models/anti-hero.interface';
+import { AntiHeroActions } from '../../state/anti-hero.actions';
+import { selectAntiHeroes } from '../../state/anti-hero.selectors';
+
 
 @Component({
   selector: 'app-list',
@@ -11,15 +16,9 @@ import { AntiHero } from '../../models/anti-hero.interface';
 })
 export class ListComponent implements OnInit {
   // sample data of anti hero
-  antiHeroes: AntiHero[] = [
-    {
-      id: '1',
-      firstName: "Eddie",
-      lastName: "Brock",
-      house: "New York",
-      knownAs: "Venom"
-    }
-  ]
+  antiHeroes: ReadonlyArray<AntiHero> = [];
+  antiHeroes$ = this.store.select(selectAntiHeroes());
+
   headers: {headerName: string, fieldName: keyof AntiHero}[] = [
     {headerName: "First Name", fieldName: "firstName"},
     {headerName: "Last Name", fieldName: "lastName"},
@@ -27,9 +26,20 @@ export class ListComponent implements OnInit {
     {headerName: "Known As", fieldName: "knownAs"},
   ]
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private store: Store<AppState>,
+  ) { }
 
   ngOnInit(): void {
+    this.store.dispatch({type: AntiHeroActions.GET_ANTI_HERO_LIST});
+    this.assignAntiHeroes();
+  }
+
+  assignAntiHeroes() {
+    this.antiHeroes$.subscribe((data) => {
+      this.antiHeroes = data;
+    });
   }
 
   selectAntiHero(data: {antiHero: AntiHero, action: TableActions}) {
