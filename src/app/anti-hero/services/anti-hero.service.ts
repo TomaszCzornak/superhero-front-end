@@ -11,7 +11,7 @@ export class AntiHeroService {
 
   constructor(private http: HttpClient) { }
 
-  
+
   getAntiHeroes(): Observable<AntiHero[]> {
     return this.http.get<AntiHero[]>(`${environment.apiURL}/anti-heroes`).pipe(
       tap((data: AntiHero[]) => data),

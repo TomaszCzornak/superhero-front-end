@@ -13,6 +13,7 @@ import {EffectsModule} from "@ngrx/effects";
 import {StoreModule} from "@ngrx/store";
 import {HttpClientModule} from "@angular/common/http";
 import {antiHeroReducer} from "./state/anti-hero.reducers";
+import {MatCardModule} from "@angular/material/card";
 
 
 
@@ -31,7 +32,8 @@ import {antiHeroReducer} from "./state/anti-hero.reducers";
     MaterialModule,
     HttpClientModule,
     StoreModule.forFeature('antiHeroState', antiHeroReducer),
-    EffectsModule.forFeature([AntiHeroEffects])
+    EffectsModule.forFeature([AntiHeroEffects]),
+    MatCardModule
   ]
 })
 export class AntiHeroModule { }
