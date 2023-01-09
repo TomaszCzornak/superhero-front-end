@@ -32,8 +32,7 @@ import {MatCardModule} from "@angular/material/card";
     MaterialModule,
     HttpClientModule,
     StoreModule.forFeature('antiHeroState', antiHeroReducer),
-    EffectsModule.forFeature([AntiHeroEffects]),
-    MatCardModule
+    EffectsModule.forFeature([AntiHeroEffects])
   ]
 })
 export class AntiHeroModule { }

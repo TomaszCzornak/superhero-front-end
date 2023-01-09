@@ -9,7 +9,7 @@ import {MaterialModule} from "../material/material.module";
 @NgModule({
   declarations: [
     NavbarComponent,
-    FooterComponent,
+    FooterComponent
   ],
   exports: [NavbarComponent, FooterComponent],
     imports: [

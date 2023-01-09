@@ -1,7 +1,7 @@
-import {NgModule} from "@angular/core";
-import {RouterModule, Routes} from "@angular/router";
-import {ListComponent} from "./pages/list/list.component";
-import {FormComponent} from "./pages/form/form.component";
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { ListComponent } from "./pages/list/list.component";
+import { FormComponent } from "./pages/form/form.component";
 
 const routes: Routes = [
   {
@@ -10,12 +10,22 @@ const routes: Routes = [
   },
   {
     path: "form",
-    component: FormComponent,
+    children: [
+      {
+        path: "",
+        component: FormComponent
+      },
+      {
+        path: ":id",
+        component: FormComponent
+      }
+    ]
   },
 ];
+
 @NgModule({
   declarations: [],
   imports: [RouterModule.forChild(routes)],
-  exports:[RouterModule]
+  exports: [RouterModule],
 })
 export class AntiHeroRoutingModule {}
