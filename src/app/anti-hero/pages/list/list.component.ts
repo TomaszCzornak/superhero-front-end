@@ -43,7 +43,18 @@ export class ListComponent implements OnInit {
   }
 
   selectAntiHero(data: {antiHero: AntiHero, action: TableActions}) {
-    this.router.navigate(['anti-heroes', 'form', data.antiHero.id]);
+    switch(data.action) {
+      case TableActions.View: {
+        this.router.navigate(['anti-heroes', 'form', data.antiHero.id]);
+        return;
+      }
+      case TableActions.Delete: {
+        this.store.dispatch({type: AntiHeroActions.REMOVE_ANTI_HERO_API, payload: data.antiHero.id});
+        return;
+
+      }
+      default: ""
+    }
   }
 
   executeCommandBarAction(action: CommandBarActions) {
@@ -53,6 +64,7 @@ export class ListComponent implements OnInit {
         return;
       }
       case CommandBarActions.DeleteAll: {
+        this.store.dispatch({type: AntiHeroActions.REMOVE_ALL_ANTI_HERO_API, payload: [...this.antiHeroes.map(d => d.id)]})
         return;
 
       }
