@@ -7,10 +7,10 @@ import { AntiHero } from '../models/anti-hero.interface';
 import { AntiHeroService } from '../services/anti-hero.service';
 import { AntiHeroActions } from './anti-hero.actions';
 
- 
+
 @Injectable()
 export class AntiHeroEffects {
- 
+
   // get list of anti heroes in the external API
   // set retrieved anti hero list in the state
   getAntiHeroes$ = createEffect(() => {
@@ -24,7 +24,7 @@ export class AntiHeroEffects {
         )
     }, {dispatch: true}
   );
-  
+
   // add anti-heroes in the database
   addAntiHero$ = createEffect(() =>{
     return this.actions$.pipe(
@@ -54,7 +54,7 @@ export class AntiHeroEffects {
   removeAntiHero$ = createEffect(() => {
     return this.actions$.pipe(
         ofType(AntiHeroActions.REMOVE_ANTI_HERO_API),
-        mergeMap((data: {type: string, payload: string}) => this.antiHeroService.deleteAntiHero(data.payload)
+        mergeMap((data: { payload: string}) => this.antiHeroService.deleteAntiHero(data.payload)
           .pipe(
             map(() => ({ type: AntiHeroActions.REMOVE_ANTI_HERO_STATE, antiHeroId: data.payload })),
             catchError(() => EMPTY)
@@ -66,7 +66,7 @@ export class AntiHeroEffects {
   removeAllAntiHero$ = createEffect(() => {
     return this.actions$.pipe(
         ofType(AntiHeroActions.REMOVE_ALL_ANTI_HERO_API),
-        mergeMap((data: {type: string, payload: string[]}) => 
+        mergeMap((data: {type: string, payload: string[]}) =>
         forkJoin([...data.payload.map((id) => this.antiHeroService.deleteAntiHero(id))])
           .pipe(
             map(() => ({ type: AntiHeroActions.REMOVE_ALL_ANTI_HERO_STATE })),
@@ -75,7 +75,7 @@ export class AntiHeroEffects {
         )
     }, {dispatch: true}
   );
- 
+
   constructor(
     private actions$: Actions,
     private antiHeroService: AntiHeroService,

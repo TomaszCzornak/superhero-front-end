@@ -11,10 +11,10 @@ import {MaterialModule} from "../material/material.module";
     NavbarComponent,
     FooterComponent
   ],
-  exports: [NavbarComponent, FooterComponent],
-    imports: [
-        CommonModule,
-        MaterialModule
-    ]
+  imports: [
+    MaterialModule,
+    CommonModule
+  ],
+  exports: [NavbarComponent, FooterComponent]
 })
 export class SharedModule { }
